@@ -21,6 +21,14 @@ export class UsersRepository {
     return await this.userModel.findOne({ where: { id }, include: [Post] });
   }
 
+  async findByEmail(email:string):Promise<User> {
+    return this.userModel.findOne({
+      where:{
+        email:email
+      }
+    })
+  }
+
   async updateUser(id: number, user: Partial<User>): Promise<[number, User[]]> {
     return await this.userModel.update(user, { where: { id }, returning: true });
   }

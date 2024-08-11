@@ -14,6 +14,9 @@ export class Post extends Model<Post> {
   @Column
   content: string;
 
+  @Column({ type: DataType.STRING, allowNull: true })
+  fileName: string; 
+
   @ForeignKey(() => User)
   @Column
   userId: number;

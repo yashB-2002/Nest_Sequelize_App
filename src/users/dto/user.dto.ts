@@ -31,6 +31,15 @@ export class UserDTO {
   @IsNotEmpty()
   lastname: string;
 
+  @IsString()
+  @IsNotEmpty()
+  role:string
+
+  @IsString()
+  @IsNotEmpty()
+  password:string
+
+
   @IsEmail()
   @IsNotEmpty()
   @Validate(CustomEmailValidator)

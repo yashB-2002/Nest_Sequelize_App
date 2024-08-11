@@ -18,6 +18,10 @@ export class UsersService {
     return this.usersRepository.findUserById(id);
   }
 
+  async findByEmail(email:string):Promise<User> {
+    return this.usersRepository.findByEmail(email)
+  }
+
   async updateUser(id: number, user: Partial<User>): Promise<User> {
     const [_, updatedUser] = await this.usersRepository.updateUser(id, user);
     return updatedUser[0];

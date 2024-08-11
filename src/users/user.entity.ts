@@ -1,6 +1,6 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, HasMany, BeforeSave } from 'sequelize-typescript';
 import { Post } from 'src/posts/post.entity';
-
+import * as bcrypt from 'bcrypt';
 @Table
 export class User extends Model<User> {
   @PrimaryKey
@@ -27,6 +27,9 @@ export class User extends Model<User> {
   gender: string;
 
   @Column
+  role:string
+
+  @Column
   age: number;
 
   @Column
@@ -39,6 +42,17 @@ export class User extends Model<User> {
     city: string;
     pincode: string;
   };
+
+  @Column
+  password: string;
+ 
+  @BeforeSave
+  static async hashPassword(user: User) {
+    if (user.password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(user.password, salt);
+    }
+  }
 
   @HasMany(() => Post)
   posts: Post[];
