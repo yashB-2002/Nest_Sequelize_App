@@ -1,6 +1,10 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, HasMany, BeforeSave } from 'sequelize-typescript';
+// src/users/user.entity.ts
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, HasMany, BeforeSave, BelongsToMany } from 'sequelize-typescript';
 import { Post } from 'src/posts/post.entity';
 import * as bcrypt from 'bcrypt';
+import { Permission } from 'src/permissions/permission.entity';
+import { UserPermission } from 'src/permissions/user_permission.entity';
+
 @Table
 export class User extends Model<User> {
   @PrimaryKey
@@ -27,7 +31,7 @@ export class User extends Model<User> {
   gender: string;
 
   @Column
-  role:string
+  role: string;
 
   @Column
   age: number;
@@ -45,7 +49,7 @@ export class User extends Model<User> {
 
   @Column
   password: string;
- 
+
   @BeforeSave
   static async hashPassword(user: User) {
     if (user.password) {
@@ -57,4 +61,6 @@ export class User extends Model<User> {
   @HasMany(() => Post)
   posts: Post[];
 
+  @BelongsToMany(() => Permission, () => UserPermission)
+  permissions: Permission[];
 }

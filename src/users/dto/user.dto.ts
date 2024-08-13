@@ -1,6 +1,7 @@
 import { IsBoolean, IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength, MaxLength, IsArray, ValidateNested, Validate } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CustomEmailValidator } from '../validators/email.validator';
+import { BooleanField, ToBoolean } from '../validators/boolean.decorator';
 
 class AddressDto {
   @IsString()
@@ -60,6 +61,7 @@ export class UserDTO {
 
   @IsBoolean()
   @IsNotEmpty()
+  @ToBoolean()
   isActive: boolean;
 
   @ValidateNested()

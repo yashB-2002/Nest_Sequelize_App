@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.entity';
 import { Post } from 'src/posts/post.entity';
+import { Permission } from 'src/permissions/permission.entity';
 
 @Injectable()
 export class UsersRepository {
@@ -14,7 +15,7 @@ export class UsersRepository {
   }
 
   async findAllUsers(): Promise<User[]> {
-    return await this.userModel.findAll({ include: [Post] });
+    return await this.userModel.findAll({ include: [Post,Permission] });
   }
 
   async findUserById(id: number): Promise<User> {

@@ -8,6 +8,9 @@ import { User } from './users/user.entity';
 import { Post } from './posts/post.entity';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { PermissionsModule } from './permissions/permissions.module';
+import { Permission } from './permissions/permission.entity';
+import { UserPermission } from './permissions/user_permission.entity';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -15,15 +18,17 @@ import { ConfigModule } from '@nestjs/config';
       dialect: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres',
+      username: 'name',
       password: "pwd",
-      database: 'db',
-      models: [User,Post],
+      database: 'userscrud',
+      models: [User,Post,Permission,UserPermission],
       autoLoadModels: true,
+      synchronize: true,
     }),
     UsersModule, 
     PostsModule, 
-    AuthModule
+    AuthModule, 
+    PermissionsModule
   ],
   controllers: [AppController],
   providers: [AppService],

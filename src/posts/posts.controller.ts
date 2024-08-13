@@ -18,7 +18,7 @@ export class PostsController {
     filename: (_, file, callback) => {
       const fileExtName = extname(file.originalname);
       const randomName = (Math.round(Math.random() * 16))
-      // console.log(`Saving file as: ${randomName}${fileExtName}`);
+      console.log(`Saving file as: ${randomName}${fileExtName}`);
       callback(null, `Image-${randomName}${fileExtName}`);
     },
   }),
