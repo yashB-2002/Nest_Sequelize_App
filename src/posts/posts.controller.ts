@@ -6,6 +6,7 @@ import { PostDTO } from './dto/post.dto';
 import { Response } from 'express';
 import { diskStorage } from 'multer';
 import path, { extname } from 'path';
+import { CacheInterceptor } from 'src/cache.interceptor';
 
 @Controller('posts')
 export class PostsController {

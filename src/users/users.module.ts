@@ -6,14 +6,15 @@ import { UsersRepository } from './user.repository';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './user.entity';
 import { PermissionsModule } from 'src/permissions/permissions.module';
+import { CacheService } from '../cache.service';
 
 @Module({
   imports: [
     SequelizeModule.forFeature([User]),
-    PermissionsModule,
+    PermissionsModule.forRoot(),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository],
-  exports: [UsersService],
+  providers: [CacheService,UsersService, UsersRepository],
+  exports: [CacheService, UsersService],
 })
 export class UsersModule {}

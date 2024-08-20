@@ -13,7 +13,7 @@ import { JwtMiddleware } from './auth.middleware';
     PassportModule,
     JwtModule.register({
       secret:'QWEASRDTGREDSQW',
-      signOptions: { expiresIn: '15m' },
+      signOptions: { expiresIn: '45m' },
     }),
   ],
   controllers: [AuthController],
@@ -23,6 +23,6 @@ export class AuthModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(JwtMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.GET });
+      .forRoutes({ path: '/users', method: RequestMethod.ALL });
   }
 }

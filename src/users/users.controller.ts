@@ -14,6 +14,7 @@ import { PathParamsDto } from './dto/PathParamsDTO';
 import { QueryDto } from './dto/Query.dto';
 import { TimingInterceptor } from './validators/controller.interceptor';
 import { CustomParseIntPipe } from './validators/IdValidation.pipe';
+import { CacheInterceptor } from '../cache.interceptor';
 
 @Controller('users')
 export class UsersController {
@@ -27,7 +28,8 @@ export class UsersController {
 
   @Get()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  // @Roles('admin')
+  @UseInterceptors(CacheInterceptor)
   async findAllUsers(): Promise<User[]> {
     return this.usersService.findAllUsers();
   }

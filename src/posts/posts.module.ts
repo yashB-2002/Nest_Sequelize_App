@@ -13,7 +13,8 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: './uploads', 
     }),
-    SequelizeModule.forFeature([Post])],
+    SequelizeModule.forFeature([Post]),
+  ],
   controllers: [PostsController],
   providers: [PostsService, PostsRepository],
 })

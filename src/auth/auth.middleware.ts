@@ -10,11 +10,19 @@ export class JwtMiddleware implements NestMiddleware {
     
     console.log("Executing middlewares..")
     const token = req.headers['authorization']?.split(' ')[1];
+    
 
     if (token) {
       try {
         const decoded = this.jwtService.verify(token);
-        req.user = decoded;
+        req.headers['user-id'] = decoded.sub;
+        req.user = {
+          ...decoded,
+          id: decoded.sub, 
+        };
+        
+        console.log(req.user);
+        
       } catch (e) {
         return res.status(401).json({ message: 'Invalid token' });
       }

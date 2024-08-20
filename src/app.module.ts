@@ -11,25 +11,33 @@ import { ConfigModule } from '@nestjs/config';
 import { PermissionsModule } from './permissions/permissions.module';
 import { Permission } from './permissions/permission.entity';
 import { UserPermission } from './permissions/user_permission.entity';
+import { LoggerModule } from './logger/logger.module';
+import { StoreModule } from './store/store.module';
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath:'.env',
+      isGlobal:true
+    }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'name',
-      password: "pwd",
-      database: 'userscrud',
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       models: [User,Post,Permission,UserPermission],
       autoLoadModels: true,
       synchronize: true,
     }),
-    UsersModule, 
-    PostsModule, 
     AuthModule, 
-    PermissionsModule
+    UsersModule, 
+    PostsModule,
+    PermissionsModule.forRoot(),
+    LoggerModule.register('debug'), 
+    StoreModule,
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })

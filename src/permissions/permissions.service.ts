@@ -1,22 +1,28 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { PermissionsRepository } from './permission.repository';
 import { Permission } from './permission.entity';
 import { UserPermission } from './user_permission.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/user.entity';
+import { LoggerService } from 'src/logger/logger.service';
+import { NotificationService } from './notify.service';
 
 @Injectable()
 export class PermissionsService {
   constructor(private readonly permissionsRepository: PermissionsRepository,
-    @InjectModel(UserPermission) private readonly userPermissionModel: typeof UserPermission
+    @InjectModel(UserPermission) private readonly userPermissionModel: typeof UserPermission,
   ) {}
 
   async createPermission(permission: Partial<Permission>): Promise<Permission> {
-    return this.permissionsRepository.createPermission(permission);
+    
+    const createdPermission = await this.permissionsRepository.createPermission(permission);
+    return createdPermission;
   }
 
   async findAllPermissions(): Promise<Permission[]> {
-    return this.permissionsRepository.findAllPermissions();
+    
+    const permissions = await this.permissionsRepository.findAllPermissions();
+    return permissions;
   }
 
   async addUserPermissions(
