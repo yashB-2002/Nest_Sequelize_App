@@ -13,6 +13,9 @@ import { Permission } from './permissions/permission.entity';
 import { UserPermission } from './permissions/user_permission.entity';
 import { LoggerModule } from './logger/logger.module';
 import { StoreModule } from './store/store.module';
+import { AuditLogModule } from './audit-log/audit-log.module';
+import { AuditLogHeader } from './audit-log/entities/AuditlogHeader';
+import { AuditLogDetail } from './audit-log/entities/AuditLogDetail';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,7 +29,7 @@ import { StoreModule } from './store/store.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      models: [User,Post,Permission,UserPermission],
+      models: [User,Post,Permission,UserPermission,AuditLogHeader,AuditLogDetail],
       autoLoadModels: true,
       synchronize: true,
     }),
@@ -36,6 +39,7 @@ import { StoreModule } from './store/store.module';
     PermissionsModule.forRoot(),
     LoggerModule.register('debug'), 
     StoreModule,
+    AuditLogModule
   ],
 
   controllers: [AppController],
